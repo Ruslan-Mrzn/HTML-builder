@@ -5,7 +5,7 @@ const readline = require('readline');
 const rl = readline.createInterface(stdin);
 
 process.on('exit', () => {
-  stdout.write('Досвидания!');
+  stdout.write('Досвидания!\n');
 });
 
 process.on('SIGINT', () => {
