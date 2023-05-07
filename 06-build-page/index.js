@@ -15,14 +15,11 @@ const settings = {
 
 /* Замена темплэйтов и формирование index.html */
 const replaceComponents = () => {
-  console.log('map', map);
   let result = settings.templateHtml;
   for (let component in map) {
     result = result.replaceAll(`{{${component}}}`, map[component] );
-    console.log('partOfTime', result);
   }
   settings.resultHtml = result;
-  console.log('finally', settings.resultHtml);
   fs.appendFile(
     path.join(projectDistPath, 'index.html'),
     settings.resultHtml,
@@ -186,7 +183,6 @@ readdir(
         componentsNames.push(fileName);
       }
     }
-    console.log('components', componentsNames);
     let counter = 0;
     readFilesFromComponents(counter);
   });
