@@ -16,7 +16,7 @@ readdir(
             if (err) throw err;
             const fileName = path.basename(filePath, path.extname(filePath));
             const fileExtension = `${file.name}`.split('.').at(-1);
-            const fileSize = `${stats.size/1024}kb`;
+            const fileSize = `${stats.size} B`;
             console.log(`${fileName} - ${fileExtension} - ${fileSize}`);
           }
         );
