@@ -4,19 +4,50 @@ const {readdir} = require('fs/promises');
 
 const cssBundlePath = path.join(__dirname, 'project-dist', 'bundle.css');
 const stylesPath = path.join(__dirname, 'styles');
-const readAndWriteFile = (filePath) => {
-  const readableStream = fs.createReadStream(filePath, 'utf-8');
+const stylesNames = [];
+
+const readFilesFromStyles = (position) => {
+  let result = '';
+  const readableStream = fs.createReadStream(path.join(stylesPath, `${stylesNames[position]}.css`), 'utf-8');
   readableStream.on(
     'data',
-    chunk => fs.appendFile(
-      cssBundlePath,
-      chunk,
-      (err) => {
-        if (err) throw err;
+    chunk => {
+      result += chunk;
+    }
+  );
+  readableStream.on(
+    'end',
+    () => {
+      fs.appendFile(
+        cssBundlePath,
+        result,
+        (err) => {
+          if (err) throw err;
+        }
+      );
+      position += 1;
+      if(position < stylesNames.length) {
+        readFilesFromStyles(position);
       }
-    )
+      else return;
+    }
   );
 };
+
+
+// const readAndWriteFile = (filePath) => {
+//   const readableStream = fs.createReadStream(filePath, 'utf-8');
+//   readableStream.on(
+//     'data',
+//     chunk => fs.appendFile(
+//       cssBundlePath,
+//       chunk,
+//       (err) => {
+//         if (err) throw err;
+//       }
+//     )
+//   );
+// };
 
 fs.writeFile(
   cssBundlePath,
@@ -34,7 +65,10 @@ readdir(
     for(let file of data) {
       if(file.isFile() && file.name.endsWith('.css')) {
         const filePath = path.join(stylesPath, `${file.name}`);
-        readAndWriteFile(filePath);
+        const fileName = path.basename(filePath, path.extname(filePath));
+        stylesNames.push(fileName);
       }
     }
+    let counter = 0;
+    readFilesFromStyles(counter);
   });
