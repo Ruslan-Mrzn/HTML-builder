@@ -13,7 +13,6 @@ const copyDir = (from, to) => {
       force: true,
     },
     () => {
-      //if (err) throw err;
     }
   )
     .then(()=> {
