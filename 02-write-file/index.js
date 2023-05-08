@@ -23,7 +23,7 @@ fs.writeFile(
 console.log('Приветствую! Введите ваш текст:');
 
 rl.on('line', (input) => {
-  if(input === 'exit') exit();
+  if(input.trim() === 'exit') exit();
   fs.appendFile(
     path.join(__dirname, 'file.txt'),
     `${input}\n`,
