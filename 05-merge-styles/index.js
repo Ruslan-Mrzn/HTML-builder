@@ -34,21 +34,6 @@ const readFilesFromStyles = (position) => {
   );
 };
 
-
-// const readAndWriteFile = (filePath) => {
-//   const readableStream = fs.createReadStream(filePath, 'utf-8');
-//   readableStream.on(
-//     'data',
-//     chunk => fs.appendFile(
-//       cssBundlePath,
-//       chunk,
-//       (err) => {
-//         if (err) throw err;
-//       }
-//     )
-//   );
-// };
-
 fs.writeFile(
   cssBundlePath,
   '',
